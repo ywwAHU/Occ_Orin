@@ -1,0 +1,11 @@
+data/
+FlashOCC-master/
+FlashOCC-master.zip
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.onnx
+**/*.pt
+**/*.pth
+**/work_dirs/
+**/.ipynb_checkpoints/

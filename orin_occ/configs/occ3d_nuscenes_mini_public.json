@@ -1,0 +1,47 @@
+{
+  "project_name": "orin_occ_occ3d_nuscenes_mini_public",
+  "camera_names": [
+    "CAM_FRONT_LEFT",
+    "CAM_FRONT",
+    "CAM_FRONT_RIGHT",
+    "CAM_BACK_LEFT",
+    "CAM_BACK",
+    "CAM_BACK_RIGHT"
+  ],
+  "image": {
+    "height": 256,
+    "width": 704
+  },
+  "grid": {
+    "x_range": [-40.0, 40.0],
+    "y_range": [-40.0, 40.0],
+    "z_range": [-1.0, 5.4],
+    "bev_height": 200,
+    "bev_width": 200,
+    "occ_zbins": 16
+  },
+  "model": {
+    "backbone_base_channels": 24,
+    "feature_channels": 80,
+    "bev_channels": 96,
+    "num_classes": 18,
+    "use_lidar": false,
+    "lidar_channels": 1
+  },
+  "training": {
+    "manifest_path": "",
+    "synthetic_samples": 8,
+    "batch_size": 1,
+    "num_workers": 0,
+    "epochs": 2,
+    "learning_rate": 0.0003,
+    "weight_decay": 0.0001,
+    "amp": true,
+    "save_dir": "work_dirs/orin_occ_occ3d_nuscenes_mini_public"
+  },
+  "export": {
+    "onnx_path": "work_dirs/orin_occ_occ3d_nuscenes_mini_public/orin_occ.onnx",
+    "opset": 17,
+    "dynamic_batch": true
+  }
+}

@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "orin-occ"
+version = "0.1.0"
+description = "Camera-dominant OCC baseline for a 10-camera + front-lidar vehicle on Orin."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.26",
+  "onnx>=1.16",
+  "Pillow>=10.0",
+  "torch>=2.5"
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
