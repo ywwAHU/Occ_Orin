@@ -36,8 +36,7 @@ class GeometryAwareProjector(nn.Module):
         intrinsics: torch.Tensor,
         extrinsics: torch.Tensor,
     ) -> torch.Tensor:
-        batch_size, camera_count, channels, feat_height, feat_width = features.shape
-        point_count = self.grid.bev_height * self.grid.bev_width
+        batch_size, camera_count, channels, _, _ = features.shape
 
         world_points = self.ego_points.unsqueeze(0).expand(batch_size, -1, -1)
         feature_sum = torch.zeros(
@@ -49,9 +48,8 @@ class GeometryAwareProjector(nn.Module):
             dtype=features.dtype,
         )
         feature_count = torch.zeros_like(feature_sum[:, :1])
-
-        scale_x = feat_width / float(self.image.width)
-        scale_y = feat_height / float(self.image.height)
+        denom_x = max(self.image.width - 1, 1)
+        denom_y = max(self.image.height - 1, 1)
 
         for camera_idx in range(camera_count):
             camera_features = features[:, camera_idx]
@@ -63,19 +61,19 @@ class GeometryAwareProjector(nn.Module):
             uvw = torch.matmul(camera_intrinsic, xyz)
 
             depth = uvw[:, 2, :].clamp(min=1e-5)
-            u = (uvw[:, 0, :] / depth) * scale_x
-            v = (uvw[:, 1, :] / depth) * scale_y
+            u = uvw[:, 0, :] / depth
+            v = uvw[:, 1, :] / depth
 
             valid = (
                 (depth > 1e-3)
                 & (u >= 0.0)
-                & (u <= feat_width - 1)
+                & (u <= self.image.width - 1)
                 & (v >= 0.0)
-                & (v <= feat_height - 1)
+                & (v <= self.image.height - 1)
             )
 
-            x_norm = (u / max(feat_width - 1, 1)) * 2.0 - 1.0
-            y_norm = (v / max(feat_height - 1, 1)) * 2.0 - 1.0
+            x_norm = (u / denom_x) * 2.0 - 1.0
+            y_norm = (v / denom_y) * 2.0 - 1.0
             grid = torch.stack([x_norm, y_norm], dim=-1).view(
                 batch_size, self.grid.bev_height, self.grid.bev_width, 2
             )

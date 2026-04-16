@@ -1,12 +1,9 @@
 {
-  "project_name": "orin_occ_baseline",
+  "project_name": "orin_occ_baseline_7cam",
   "camera_names": [
     "front_left",
     "front_center",
     "front_right",
-    "rear_left_lowlight",
-    "rear_center_lowlight",
-    "rear_right_lowlight",
     "surround_left_front",
     "surround_right_front",
     "surround_left_rear",
@@ -41,10 +38,10 @@
     "learning_rate": 0.0003,
     "weight_decay": 0.0001,
     "amp": true,
-    "save_dir": "work_dirs/orin_occ_baseline"
+    "save_dir": "work_dirs/orin_occ_baseline_7cam"
   },
   "export": {
-    "onnx_path": "work_dirs/orin_occ_baseline/orin_occ.onnx",
+    "onnx_path": "work_dirs/orin_occ_baseline_7cam/orin_occ.onnx",
     "opset": 17,
     "dynamic_batch": true
   }

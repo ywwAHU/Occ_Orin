@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "orin-occ"
 version = "0.1.0"
-description = "Camera-dominant OCC baseline for a 10-camera + front-lidar vehicle on Orin."
+description = "Camera-dominant OCC baseline for a 7-camera + multi-lidar Orin vehicle."
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
